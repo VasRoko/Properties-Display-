@@ -1,5 +1,4 @@
 # Properties-Display-
-Vue.js component for displaying filtering and sorting properties with List and Map view options.
 
 Please Note this is for development not production. 
 
