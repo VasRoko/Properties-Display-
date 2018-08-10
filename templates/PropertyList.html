@@ -1,0 +1,110 @@
+<div>
+    <div class='filters_container'>
+    
+        <div class="row">
+            <div v-if='selectedMode=="list"' class="row">
+                <div class="col-sm-12">
+                    <h4>Filter By</h4>
+                </div>
+            </div>
+            <div class="filtering_items">
+                <div class="col-sm-1 item">
+                    <button class="viewModeButton" v-on:click="mapViewMode">
+                        <i class="fas fa-map-marker"></i>                        
+                    </button>
+                    <button class="viewModeButton" v-on:click="listViewMode">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                </div>
+
+                <div class="col-sm-2 item">
+                    <select id="minprice" v-model="minPropertyPrice" class="price">
+                        <option value="any" selected>(£) Min Price</option>
+                        <option v-for="minprice in propertyPrices" :value="minprice">£{{ minprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-2 item">
+                    <select v-model="maxPropertyPrice" class="price">
+                        <option value="any" selected>(£) Max Price</option>
+                        <option v-for="maxprice in propertyPrices" :value="maxprice">£{{ maxprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} </option>
+                    </select>
+                </div>
+
+                <div class="col-sm-2 item">
+                    <select v-model="status">
+                        <option value="all" selected>Any Status</option>
+                        <option value="For Sale">For Sale</option>
+                        <option value="Sale Agreed">Sale Agreed</option>
+                        <option value="Sold">Sold</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-2 item">
+                    <select v-model="plots">
+                        <option value="any" selected>All Plots</option>
+                        <option value="1-5">1-5</option>
+                        <option value="6-15">6-15</option>
+                        <option value="16-25">16-25</option>
+                        <option value="26-50">26-50</option>
+                        <option value="51-100">51-100</option>
+                        <option value="100">100+</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-2 item">
+                    <select v-model="location">
+                            <option selected value="all">Any Location</option>
+                            <option v-for="propLocation in locations" :value="propLocation">{{ propLocation }}</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-1 item">
+                    <button class="resetButton" v-on:click="reset">
+                        <i class="fa fa-refresh"></i>  
+                        Reset                      
+                    </button>
+                </div>
+
+            </div>
+        </div>
+        
+        <div v-if='selectedMode=="list"' class="row sorting_items">
+            <div class="col-sm-12 item">
+                <div class="col-sm-12">
+                    <h4>Sort By</h4>
+                </div>
+            </div>
+            <div class="col-sm-2 item">
+                <select v-model="sortByDate"  @click="sortByPlots = 'plot-size', sortByStatus = 'any'">
+                    <option value="date">Date</option>
+                    <option value="newest">Newest – Oldest</option>
+                    <option value="oldest">Oldest – Newest</option>
+                </select>
+            </div>   
+            <div class="col-sm-4 item">
+                <select v-model="sortByStatus"  @click="sortByDate = 'date', sortByPlots = 'plot-size'">
+                    <option value="any">Status</option>
+                    <option value="sold">Sold / Sale Agreed / For sale</option>
+                    <option value="forsale">For sale / Sale Agreed / Sold</option>
+                </select>
+            </div> 
+            <div class="col-sm-2 item">
+                    <select v-model="sortByPlots" @click="sortByDate = 'date', sortByStatus = 'any'">
+                        <option value="plot-size">Plot</option>
+                        <option value="high">High - Low</option>
+                        <option value="low">Low - High</option>
+                    </select>
+            </div>            
+        </div>
+
+    </div>
+
+    <div v-show='selectedMode=="map"' class='map-view-container'>
+        <property-map-view :filteredProperties="filteredProperties"></property-map-view>
+    </div>
+    <div v-show='selectedMode=="list"' class='list-view-container'>
+        <property-list-view :paginatedProperties="paginatedProperties" :totalPages="totalPages" :setPage="setPage" ></property-list-view>
+    </div>
+</div>    
+

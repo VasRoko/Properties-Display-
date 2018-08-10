@@ -1,0 +1,18 @@
+<div>
+    <div class="single-property-info">
+        <h3>{{ property.title }}</h3>
+        <p v-if="property.plots <= 1"> {{ property.plots }} Plot</p>
+        <p v-else> {{ property.plots }} Plots</p>
+
+        <p v-if="property.price_type == 'Actual'">£{{ propery_price }}</p>
+        <p v-else-if="property.price_type == 'Offers in the region of'">{{ property.price_type }} £{{ propery_price }}</p>
+        <p v-else-if="property.price_type == 'Offers in excess of'">{{ property.price_type }} £{{ propery_price }}</p>
+        <p v-else>Offers Invited.</p>
+
+
+    </div>
+    <div class="single-property-thumb"  :style="{ 'background-image': 'url(/property_images/' + property.id + '/' + property.id + '.jpg)' }">  
+        <div class="single-property-sash" :style="{ 'background-image': 'url(/images/' + propery_flash + '.png)' }"></div>           
+        <a v-bind:href='/land/ + property.id' class='btn single-property-btn'>Details</a>
+    </div> 
+</div>

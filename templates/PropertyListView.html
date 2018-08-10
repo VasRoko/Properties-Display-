@@ -1,0 +1,15 @@
+<div class="">
+    <article v-for='property in paginatedProperties' class="col-xs-12 col-sm-6 col-md-4 property">
+        <single-property :property="property" class='single-property-item'></single-property>
+    </article>
+    <div v-if="paginatedProperties == 0" class="text-center">
+        <h3>"Sorry, we are unable to locate any results matching your search criteria. Please  try again."</h3>
+    </div>
+    <div class="col-xs-12">
+        <ul class="pagination">
+            <li v-for="pageNumber in totalPages" @click="setActiveClass(pageNumber)" :class="{ active : activePage == pageNumber }">
+                <span @click="setPage(pageNumber)">{{ pageNumber }}</span>
+            </li>
+        </ul>
+    </div>
+</div>
